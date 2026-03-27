@@ -2,6 +2,13 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import KursPodstawowy from '../views/KursPodstawowy.vue'
 import KursCysterny from '../views/KursCysterny.vue'
+import KursKlasa1 from '../views/KursKlasa1.vue'
+import KursKlasa7 from '../views/KursKlasa7.vue'
+import KursOdswiezajacy from '../views/KursOdswiezajacy.vue'
+
+// Admin imports
+import AdminLogin from '../views/admin/AdminLogin.vue'
+import AdminDashboard from '../views/admin/AdminDashboard.vue'
 
 // Przepisy imports
 import PrzepisyWstep from '../views/przepisy/Wstep.vue'
@@ -24,6 +31,9 @@ import QuizCysterny from '../views/quizy/QuizCysterny.vue'
 // O nas import
 import ONas from '../views/ONas.vue'
 
+// Terminarz import
+import Terminarz from '../views/Terminarz.vue'
+
 const routes = [
   {
     path: '/',
@@ -36,6 +46,11 @@ const routes = [
     component: ONas
   },
   {
+    path: '/terminarz',
+    name: 'Terminarz',
+    component: Terminarz
+  },
+  {
     path: '/kursy/podstawowy',
     name: 'KursPodstawowy',
     component: KursPodstawowy
@@ -44,6 +59,36 @@ const routes = [
     path: '/kursy/cysterny',
     name: 'KursCysterny',
     component: KursCysterny
+  },
+  {
+    path: '/kursy/klasa-1',
+    name: 'KursKlasa1',
+    component: KursKlasa1
+  },
+  {
+    path: '/kursy/klasa-7',
+    name: 'KursKlasa7',
+    component: KursKlasa7
+  },
+  {
+    path: '/kursy/odswiezajacy',
+    name: 'KursOdswiezajacy',
+    component: KursOdswiezajacy
+  },
+  // Admin routes
+  {
+    path: '/admin',
+    redirect: '/admin/login'
+  },
+  {
+    path: '/admin/login',
+    name: 'AdminLogin',
+    component: AdminLogin
+  },
+  {
+    path: '/admin/dashboard',
+    name: 'AdminDashboard',
+    component: AdminDashboard
   },
   // Przepisy routes
   {

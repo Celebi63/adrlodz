@@ -10,7 +10,7 @@
     <!-- Content with Image -->
     <section class="py-16 px-8 bg-white">
       <div class="mx-auto max-w-[1440px]">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
           <!-- Text Column -->
           <div class="space-y-6">
             <h2 class="text-3xl font-bold text-text-main mb-6">
@@ -67,28 +67,30 @@
 
           <!-- Image Column -->
           <div class="lg:order-last">
-            <div class="relative rounded-lg overflow-hidden shadow-2xl">
-              <img 
-                src="../assets/truck.png" 
-                alt="Ciężarówka ADR" 
-                class="w-full h-auto object-cover"
-              />
-              <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
-            </div>
-            
-            <!-- Stats -->
-            <div class="grid grid-cols-3 gap-4 mt-8">
-              <div class="bg-primary/10 rounded-lg p-4 text-center">
-                <p class="text-3xl font-bold text-primary mb-1">500+</p>
-                <p class="text-sm text-gray-700">Absolwentów</p>
+            <div class="bg-white rounded-lg p-6 border border-gray-200 shadow-lg sticky top-24">
+              <div class="relative rounded-lg overflow-hidden">
+                <img 
+                  src="../assets/truck.png" 
+                  alt="Ciężarówka ADR" 
+                  class="w-full h-auto object-cover"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
               </div>
-              <div class="bg-primary/10 rounded-lg p-4 text-center">
-                <p class="text-3xl font-bold text-primary mb-1">10+</p>
-                <p class="text-sm text-gray-700">Lat doświadczenia</p>
-              </div>
-              <div class="bg-primary/10 rounded-lg p-4 text-center">
-                <p class="text-3xl font-bold text-primary mb-1">98%</p>
-                <p class="text-sm text-gray-700">Zdawalność</p>
+              
+              <!-- Stats -->
+              <div class="grid grid-cols-3 gap-4 mt-6">
+                <div class="bg-primary/10 rounded-lg p-4 text-center">
+                  <p class="text-3xl font-bold text-primary mb-1">500+</p>
+                  <p class="text-sm text-gray-700">Absolwentów</p>
+                </div>
+                <div class="bg-primary/10 rounded-lg p-4 text-center">
+                  <p class="text-3xl font-bold text-primary mb-1">10+</p>
+                  <p class="text-sm text-gray-700">Lat doświadczenia</p>
+                </div>
+                <div class="bg-primary/10 rounded-lg p-4 text-center">
+                  <p class="text-3xl font-bold text-primary mb-1">98%</p>
+                  <p class="text-sm text-gray-700">Zdawalność</p>
+                </div>
               </div>
             </div>
           </div>

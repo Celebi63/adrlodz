@@ -32,7 +32,7 @@
               <p class="text-xl text-gray-700">{{ courseData.duration }}</p>
               <p class="text-sm text-gray-600 mt-2">
                 Szkolenie odbywa się w formie stacjonarnej<br>
-                Poniedziałek - Środa, 8:00 - 16:00
+                Poniedziałek - Wtorek, 8:00 - 16:00
               </p>
             </div>
 
@@ -75,8 +75,9 @@
 
                 <div class="bg-primary/10 rounded-lg p-4 mt-6">
                   <p class="text-sm font-semibold text-primary">
-                    💡 Po ukończeniu kursu podstawowego możesz rozszerzyć uprawnienia o kursy 
-                    specjalistyczne (cysterny, klasa 1, klasa 7).
+                    💡 Kurs klasy 1 jest wymagany do przewozu materiałów wybuchowych, 
+                    fajerwerków i amunicji. Jest to specjalistyczne uprawnienie z rygorystycznymi 
+                    przepisami bezpieczeństwa.
                   </p>
                 </div>
 
@@ -86,7 +87,7 @@
                     @click="scrollToRegistration"
                     class="w-full bg-primary text-white px-8 py-4 text-lg font-semibold hover:opacity-90 transition-opacity uppercase rounded-lg"
                   >
-                    Zapisz się na kurs podstawowy
+                    Zapisz się na kurs klasa 1
                   </button>
                 </div>
               </div>
@@ -97,7 +98,7 @@
     </section>
 
     <!-- Registration Form -->
-    <RegistrationForm course-type="podstawowy" />
+    <RegistrationForm course-type="klasa1" />
 
     <!-- Contact -->
     <Contact />
@@ -114,7 +115,7 @@ import { supabase } from '../lib/supabaseClient'
 import RegistrationForm from '../components/RegistrationForm.vue'
 import Contact from '../components/Contact.vue'
 
-const COURSE_TYPE = 'podstawowy'
+const COURSE_TYPE = 'klasa1'
 
 const courseData = ref(null)
 const loading = ref(true)

@@ -7,7 +7,7 @@
           Kontakt
         </h2>
         <p class="text-lg text-gray-600">
-          Skontaktuj się z nami lub odwiedź nasze biuro
+          Skontaktuj się z nami
         </p>
       </div>
 
@@ -26,7 +26,7 @@
               </div>
               <div>
                 <h3 class="text-xl font-semibold text-text-main mb-2">Adres</h3>
-                <p class="text-gray-700">ul. Wersalska 47</p>
+                <p class="text-gray-700">ul. Wersalska 47/pok 709</p>
                 <p class="text-gray-700">91-212 Łódź</p>
               </div>
             </div>
@@ -42,8 +42,7 @@
               </div>
               <div>
                 <h3 class="text-xl font-semibold text-text-main mb-2">Telefon</h3>
-                <p class="text-gray-700">+48 123 456 789</p>
-                <p class="text-gray-700">+48 987 654 321</p>
+                <p class="text-gray-700">+48 663 234 234</p>
               </div>
             </div>
           </div>
@@ -82,7 +81,7 @@
         <!-- Google Maps -->
         <div class="bg-white rounded-lg shadow-md overflow-hidden h-[600px]">
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2468.830076875234!2d19.462738615746784!3d51.77008197968113!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x471a34f8b4b8f8d1%3A0x8f5f5f5f5f5f5f5f!2sWersalska%2047%2C%2091-212%20%C5%81%C3%B3d%C5%BA!5e0!3m2!1spl!2spl!4v1234567890123!5m2!1spl!2spl"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2466.824490410872!2d19.378711476743753!3d51.809367488598774!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x471bb511884c6e85%3A0xf1bc31b981b5721!2zQURSIMWBw7Nkxbo!5e0!3m2!1spl!2spl!4v1768554084061!5m2!1spl!2spl"
             width="100%"
             height="100%"
             style="border:0;"

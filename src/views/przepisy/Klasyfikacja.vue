@@ -1,80 +1,112 @@
 <template>
-  <div>
+  <div v-if="loading" class="min-h-screen flex items-center justify-center">
+    <p class="text-gray-600">Ładowanie...</p>
+  </div>
+
+  <div v-else-if="pageData">
     <section class="bg-gradient-to-r from-primary to-orange-600 text-white py-8 px-8">
       <div class="mx-auto max-w-[1440px]">
-        <h1 class="text-3xl md:text-4xl font-bold">Klasyfikacja</h1>
+        <h1 
+          class="text-3xl md:text-4xl font-bold"
+          v-editable="{ 
+            label: 'Tytuł strony',
+            save: (v) => savePageTitle(v)
+          }"
+        >
+          {{ pageData.page_title }}
+        </h1>
       </div>
     </section>
 
     <section class="py-16 px-8 bg-white">
       <div class="mx-auto max-w-[1440px]">
-        <div class="prose max-w-none">
-          <p class="text-lg text-gray-700 mb-6">
-            Towary niebezpieczne są podzielone na 9 klas według rodzaju zagrożenia, które stwarzają.
-          </p>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="bg-gray-50 p-4 rounded-lg">
-              <h3 class="font-bold text-primary mb-2">Klasa 1</h3>
-              <p class="text-gray-700">Materiały i przedmioty wybuchowe</p>
-            </div>
-            <div class="bg-gray-50 p-4 rounded-lg">
-              <h3 class="font-bold text-primary mb-2">Klasa 2</h3>
-              <p class="text-gray-700">Gazy</p>
-            </div>
-            <div class="bg-gray-50 p-4 rounded-lg">
-              <h3 class="font-bold text-primary mb-2">Klasa 3</h3>
-              <p class="text-gray-700">Ciecze łatwopalne</p>
-            </div>
-            <div class="bg-gray-50 p-4 rounded-lg">
-              <h3 class="font-bold text-primary mb-2">Klasa 4.1</h3>
-              <p class="text-gray-700">Ciała stałe łatwopalne</p>
-            </div>
-            <div class="bg-gray-50 p-4 rounded-lg">
-              <h3 class="font-bold text-primary mb-2">Klasa 4.2</h3>
-              <p class="text-gray-700">Materiały samozapalne</p>
-            </div>
-            <div class="bg-gray-50 p-4 rounded-lg">
-              <h3 class="font-bold text-primary mb-2">Klasa 4.3</h3>
-              <p class="text-gray-700">Materiały wydzielające gazy palne</p>
-            </div>
-            <div class="bg-gray-50 p-4 rounded-lg">
-              <h3 class="font-bold text-primary mb-2">Klasa 5.1</h3>
-              <p class="text-gray-700">Materiały utleniające</p>
-            </div>
-            <div class="bg-gray-50 p-4 rounded-lg">
-              <h3 class="font-bold text-primary mb-2">Klasa 5.2</h3>
-              <p class="text-gray-700">Nadtlenki organiczne</p>
-            </div>
-            <div class="bg-gray-50 p-4 rounded-lg">
-              <h3 class="font-bold text-primary mb-2">Klasa 6.1</h3>
-              <p class="text-gray-700">Materiały trujące</p>
-            </div>
-            <div class="bg-gray-50 p-4 rounded-lg">
-              <h3 class="font-bold text-primary mb-2">Klasa 6.2</h3>
-              <p class="text-gray-700">Materiały zakaźne</p>
-            </div>
-            <div class="bg-gray-50 p-4 rounded-lg">
-              <h3 class="font-bold text-primary mb-2">Klasa 7</h3>
-              <p class="text-gray-700">Materiały radioaktywne</p>
-            </div>
-            <div class="bg-gray-50 p-4 rounded-lg">
-              <h3 class="font-bold text-primary mb-2">Klasa 8</h3>
-              <p class="text-gray-700">Materiały żrące</p>
-            </div>
-            <div class="bg-gray-50 p-4 rounded-lg">
-              <h3 class="font-bold text-primary mb-2">Klasa 9</h3>
-              <p class="text-gray-700">Różne materiały i przedmioty niebezpieczne</p>
-            </div>
-          </div>
+        <div 
+          v-for="(section, index) in pageData.content_sections" 
+          :key="section.id" 
+          class="mb-12 last:mb-0"
+        >
+          <h2 
+            v-if="section.title"
+            class="text-2xl font-bold text-text-main mb-4"
+            v-editable="{ 
+              label: 'Tytuł sekcji ' + (index + 1),
+              save: (v) => saveSectionTitle(index, v)
+            }"
+          >
+            {{ section.title }}
+          </h2>
+          <div 
+            class="text-gray-700 whitespace-pre-line leading-relaxed prose max-w-none"
+            v-editable="{ 
+              label: 'Treść sekcji ' + (index + 1),
+              save: (v) => saveSectionContent(index, v)
+            }"
+          >{{ section.content }}</div>
         </div>
       </div>
     </section>
 
     <Contact />
   </div>
+
+  <div v-else class="min-h-screen flex items-center justify-center">
+    <p class="text-gray-600">Strona nie została znaleziona.</p>
+  </div>
 </template>
 
 <script setup>
+import { ref, onMounted } from 'vue'
+import { supabase } from '../../lib/supabaseClient'
 import Contact from '../../components/Contact.vue'
-</script>
 
+const PAGE_SLUG = 'przepisy-klasyfikacja'
+
+const pageData = ref(null)
+const loading = ref(true)
+
+onMounted(async () => {
+  await loadPageContent()
+})
+
+const loadPageContent = async () => {
+  try {
+    const { data, error } = await supabase
+      .from('page_contents')
+      .select('*')
+      .eq('page_slug', PAGE_SLUG)
+      .eq('is_published', true)
+      .single()
+
+    if (error) throw error
+    pageData.value = data
+  } catch (error) {
+    console.error('Error loading page:', error)
+  } finally {
+    loading.value = false
+  }
+}
+
+const savePageTitle = async (newValue) => {
+  pageData.value.page_title = newValue
+  await supabase
+    .from('page_contents')
+    .update({ page_title: newValue })
+    .eq('id', pageData.value.id)
+}
+
+const saveSectionTitle = async (index, newValue) => {
+  pageData.value.content_sections[index].title = newValue
+  await supabase
+    .from('page_contents')
+    .update({ content_sections: pageData.value.content_sections })
+    .eq('id', pageData.value.id)
+}
+
+const saveSectionContent = async (index, newValue) => {
+  pageData.value.content_sections[index].content = newValue
+  await supabase
+    .from('page_contents')
+    .update({ content_sections: pageData.value.content_sections })
+    .eq('id', pageData.value.id)
+}
+</script>

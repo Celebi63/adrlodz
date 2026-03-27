@@ -4,15 +4,42 @@
       <!-- Header -->
       <div class="text-center mb-12">
         <h2 class="text-4xl font-bold text-text-main mb-4">
-          Zapis na egzamin podstawowy
+          Zapisz się na kurs ADR
         </h2>
         <p class="text-lg text-gray-600">
-          Wypełnij formularz, aby zapisać się na najbliższy kurs ADR
+          Wypełnij formularz, aby zapisać się na wybrany kurs
         </p>
       </div>
 
+      <!-- Loading State -->
+      <div v-if="loadingCourses" class="text-center py-8">
+        <p class="text-gray-600">Ładowanie dostępnych kursów...</p>
+      </div>
+
       <!-- Form -->
-      <form @submit.prevent="handleSubmit" class="space-y-6">
+      <form v-else @submit.prevent="handleSubmit" class="space-y-6">
+        <!-- Wybór kursu -->
+        <div>
+          <label for="courseSelect" class="block text-sm font-semibold text-text-main mb-2">
+            Wybierz kurs *
+          </label>
+          <select
+            id="courseSelect"
+            v-model="formData.selectedCourse"
+            required
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-white"
+          >
+            <option value="" disabled>-- Wybierz kurs --</option>
+            <option 
+              v-for="course in availableCourses" 
+              :key="course.id"
+              :value="course.course_type"
+            >
+              {{ course.title }} - {{ course.next_date }}
+            </option>
+          </select>
+        </div>
+
         <!-- Imię -->
         <div>
           <label for="firstName" class="block text-sm font-semibold text-text-main mb-2">
@@ -152,17 +179,21 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted, watch } from 'vue'
 import { supabase } from '../lib/supabaseClient'
 
 const props = defineProps({
   courseType: {
     type: String,
-    default: 'podstawowy'
+    default: ''
   }
 })
 
+const availableCourses = ref([])
+const loadingCourses = ref(true)
+
 const formData = reactive({
+  selectedCourse: '',
   firstName: '',
   lastName: '',
   email: '',
@@ -175,6 +206,38 @@ const formData = reactive({
 const isSubmitting = ref(false)
 const showSuccess = ref(false)
 const showError = ref(false)
+
+onMounted(async () => {
+  await loadCourses()
+  
+  // If courseType prop is provided, set it as default
+  if (props.courseType) {
+    formData.selectedCourse = props.courseType
+  }
+})
+
+// Watch for courseType changes (e.g., from Terminarz page)
+watch(() => props.courseType, (newType) => {
+  if (newType) {
+    formData.selectedCourse = newType
+  }
+})
+
+const loadCourses = async () => {
+  try {
+    const { data, error } = await supabase
+      .from('courses')
+      .select('*')
+      .order('next_date', { ascending: true })
+
+    if (error) throw error
+    availableCourses.value = data || []
+  } catch (error) {
+    console.error('Error loading courses:', error)
+  } finally {
+    loadingCourses.value = false
+  }
+}
 
 const handleSubmit = async () => {
   isSubmitting.value = true
@@ -192,7 +255,7 @@ const handleSubmit = async () => {
           phone: formData.phone,
           pesel: formData.pesel,
           birth_place: formData.birthPlace,
-          course_type: props.courseType,
+          course_type: formData.selectedCourse,
           consent: formData.consent,
           created_at: new Date().toISOString()
         }
@@ -205,7 +268,13 @@ const handleSubmit = async () => {
     
     // Reset form
     Object.keys(formData).forEach(key => {
-      formData[key] = key === 'consent' ? false : ''
+      if (key === 'consent') {
+        formData[key] = false
+      } else if (key === 'selectedCourse') {
+        formData[key] = props.courseType || ''
+      } else {
+        formData[key] = ''
+      }
     })
 
   } catch (error) {

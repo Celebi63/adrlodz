@@ -10,3 +10,62 @@ body {
 #app {
   min-height: 100vh;
 }
+
+/* Custom color variables */
+:root {
+  --color-primary: #ff6b35;
+}
+
+/* V-Editable Directive Styles */
+.v-editable {
+  position: relative;
+  cursor: pointer !important;
+  transition: all 0.2s ease;
+  border-radius: 4px;
+}
+
+.v-editable:hover {
+  outline: 2px dashed var(--color-primary) !important;
+  outline-offset: 4px;
+  background-color: rgba(255, 107, 53, 0.05) !important;
+}
+
+.v-editable-editing {
+  outline: 3px solid var(--color-primary) !important;
+  outline-offset: 4px;
+  background-color: rgba(255, 107, 53, 0.15) !important;
+  padding: 4px 8px !important;
+  cursor: text !important;
+}
+
+.v-editable:hover::before {
+  content: '✏️ ' attr(data-label) ' - Kliknij';
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-primary);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  z-index: 10000;
+  pointer-events: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.v-editable-editing::before {
+  content: '💾 Kliknij poza aby zapisać';
+  background: #10b981;
+}
+
+/* Remove default contenteditable styling */
+[contenteditable="true"] {
+  outline: 0px solid transparent !important;
+}
+
+[contenteditable="true"]:focus {
+  outline: 0px solid transparent !important;
+}

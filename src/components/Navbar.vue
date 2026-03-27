@@ -8,7 +8,7 @@
         </span>
         <button 
           @click="scrollToContact"
-          class="bg-primary text-text-main px-6 py-1 text-sm font-semibold hover:opacity-90 transition-opacity uppercase"
+          class="bg-primary text-text-main px-6 py-1 text-sm font-semibold hover:opacity-90 transition-opacity uppercase rounded-md"
         >
           KONTAKT
         </button>
@@ -18,7 +18,7 @@
     <!-- Main Navigation -->
     <nav class="bg-background shadow-md sticky top-0 z-50">
       <div class="mx-auto max-w-[1440px] px-8">
-        <div class="flex items-center h-28 gap-8">
+        <div class="flex items-center justify-between h-28">
           <!-- Logo -->
           <router-link to="/" class="flex items-center">
             <img 
@@ -29,7 +29,7 @@
           </router-link>
 
           <!-- Desktop Menu -->
-          <div class="hidden lg:flex items-center space-x-8 flex-1 justify-between">
+          <div class="hidden lg:flex items-center space-x-8 flex-1 justify-evenly ml-16">
             <router-link to="/o-nas" class="text-text-main hover:text-primary transition-colors font-medium">
               O NAS
             </router-link>
@@ -53,12 +53,22 @@
                   <router-link to="/kursy/cysterny" class="block px-4 py-3 text-text-main hover:bg-surface hover:text-primary transition-colors">
                     Kurs ADR - Cysterny
                   </router-link>
-                  <a href="#" class="block px-4 py-3 text-text-main hover:bg-surface hover:text-primary transition-colors">
+                  <router-link to="/kursy/klasa-1" class="block px-4 py-3 text-text-main hover:bg-surface hover:text-primary transition-colors">
+                    Kurs ADR - Klasa 1
+                  </router-link>
+                  <router-link to="/kursy/klasa-7" class="block px-4 py-3 text-text-main hover:bg-surface hover:text-primary transition-colors">
+                    Kurs ADR - Klasa 7
+                  </router-link>
+                  <router-link to="/kursy/odswiezajacy" class="block px-4 py-3 text-text-main hover:bg-surface hover:text-primary transition-colors">
                     Kurs odświeżający ADR
-                  </a>
+                  </router-link>
                 </div>
               </div>
             </div>
+
+            <router-link to="/terminarz" class="text-text-main hover:text-primary transition-colors font-medium">
+              TERMINARZ
+            </router-link>
 
             <!-- Przepisy Dropdown with Invisible Bridge -->
             <div class="relative group">
@@ -204,11 +214,25 @@
               <router-link to="/kursy/cysterny" class="block py-2 text-sm text-text-main hover:text-primary" @click="mobileMenuOpen = false">
                 Kurs ADR - Cysterny
               </router-link>
-              <a href="#" class="block py-2 text-sm text-text-main hover:text-primary" @click="mobileMenuOpen = false">
+              <router-link to="/kursy/klasa-1" class="block py-2 text-sm text-text-main hover:text-primary" @click="mobileMenuOpen = false">
+                Kurs ADR - Klasa 1
+              </router-link>
+              <router-link to="/kursy/klasa-7" class="block py-2 text-sm text-text-main hover:text-primary" @click="mobileMenuOpen = false">
+                Kurs ADR - Klasa 7
+              </router-link>
+              <router-link to="/kursy/odswiezajacy" class="block py-2 text-sm text-text-main hover:text-primary" @click="mobileMenuOpen = false">
                 Kurs odświeżający ADR
-              </a>
+              </router-link>
             </div>
           </div>
+
+          <router-link 
+            to="/terminarz" 
+            class="block py-3 text-text-main hover:text-primary transition-colors font-medium border-t border-surface"
+            @click="mobileMenuOpen = false"
+          >
+            TERMINARZ
+          </router-link>
 
           <!-- Mobile Przepisy Accordion -->
           <div class="border-t border-surface">
